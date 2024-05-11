@@ -4,7 +4,7 @@
 <!-- Status -->
 
 <h4 align="center">
- 🚧  Clients 🚀 Under construction...  🚧
+ 🚧 Microservices Clients 🚀 Under construction...  🚧
 </h4>
 
 <hr>
@@ -14,59 +14,59 @@
   <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
   <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
   <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
-  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a>
 </p>
 
 <br>
 
 ## :dart: About ##
 
-Describe your project
+This microservice offers a comprehensive set of features for customer management in a CRM environment.
+
+This project constitutes a Reconstructed Professional Situation (MSPR) carried out with a view to obtaining the Master 1. It is a simulation of a real professional situation, allowing the knowledge and skills acquired during the course to be put into practice.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Customer management via REST API;\
+:heavy_check_mark: Managing roles and permissions on the API;\
+:heavy_check_mark: Monitoring;\
+:heavy_check_mark: Unit tests;
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [Java](https://www.java.com/fr/)
+- [Spring](https://spring.io/)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Postgres](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
+- [Jenkins](https://www.jenkins.io/)
+- [Junit5](https://junit.org/junit5/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Docker](https://www.docker.com/) installed.
 
 ## :checkered_flag: Starting ##
 
 ```bash
 # Clone this project
-$ git clone https://github.com/{{YOUR_GITHUB_USERNAME}}/clients
+$ git clone https://github.com/MSPR2-Paye-ton-kawa/ms_clients
 
 # Access
-$ cd clients
+$ cd ms_clients
 
 # Install dependencies
-$ yarn
+$ docker
 
 # Run the project
-$ yarn start
+$ docker
 
-# The server will initialize in the <http://localhost:3000>
+# The server will initialize in the <http://localhost:8080>
 ```
 
-## :memo: License ##
-
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
-
-Made with :heart: by <a href="https://github.com/{{YOUR_GITHUB_USERNAME}}" target="_blank">{{YOUR_NAME}}</a>
+Made with :heart: by <a href="https://github.com/tkmmoise" target="_blank">Tkm</a>
 
 &#xa0;
 

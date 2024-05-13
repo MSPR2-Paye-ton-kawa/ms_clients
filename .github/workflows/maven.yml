@@ -1,0 +1,43 @@
+name: Development
+run-name: SecurityChecker, CodingStandards, UnitTests, Build and Deploy in dev mode
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  security-checker:
+    name: SecurityChecker
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "SecurityChecker step"
+  coding-standards:
+    name: CodingStandards (Sonar)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CodingStandards step"
+  unit-test:
+    needs: [security-checker, coding-standards]
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Unit tests step"
+  build:
+    needs: [unit-test]
+    name: Build with
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+  deploy:
+    needs: [build]
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Unit tests step"

@@ -1,6 +1,8 @@
 services:
   postgres:
     image: postgres:latest
+    container_name: ms_clients_postgres
+    hostname: ms_clients_postgres
     restart: always
     env_file: .env
     environment:
@@ -19,8 +21,12 @@ services:
       - postgres
     build: 
       context: .
+    container_name: ms_clients_app
+    hostname: ms_clients_app
+    restart: unless-stopped
     ports:
       - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
+      - ${DEBUGGER_LOCAL_PORT}:${DEBUGGER_DOCKER_PORT}
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}

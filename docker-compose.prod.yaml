@@ -1,0 +1,7 @@
+# Development environment override
+services:
+  app:
+    build:
+      target: final
+    environment:
+      - DEBUG_MODE=${DEBUG_MODE}

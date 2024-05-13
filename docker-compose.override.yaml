@@ -1,0 +1,13 @@
+# Development environment override
+services:
+  app:
+    build:
+      target: development
+    environment:
+      - DEBUG_MODE=${DEBUG_MODE}
+    # volumes:
+    #   - ./src/main:/ms_clients/src/main
+    develop:
+      watch:
+        - path: /src
+          action: rebuild

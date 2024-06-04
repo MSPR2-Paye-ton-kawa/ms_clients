@@ -1,7 +1,12 @@
 package com.mspr.clients.models;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "clients")
@@ -34,6 +39,10 @@ public class Client {
         this.lastname = lastname;
         this.address = address;
         this.company = company;
+    }
+
+    public void rienFaire() {
+        
     }
 
     public String getId() {

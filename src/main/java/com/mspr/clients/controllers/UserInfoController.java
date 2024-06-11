@@ -1,7 +1,5 @@
 package com.mspr.clients.controllers;
 
-import com.mspr.clients.services.ClientRabbitMessageSender;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -14,14 +12,6 @@ import java.util.Map;
 
 @RestController
 class UserInfoController {
-
-    @Autowired
-    private ClientRabbitMessageSender ClientRabbitMessageSender;
-    @GetMapping("/sendMessage")
-    String home() {
-        ClientRabbitMessageSender.sendMessageInClientQueue("Hello from RabbitMQ!");
-        return "Welcome to the Clients API";
-    }
     @GetMapping("/api/me")
     Map<String, Object> currentUserDetails() {
         return getLoginUserDetails();

@@ -6,6 +6,7 @@ import com.mspr.clients.execptions.ClientNotFoundException;
 import com.mspr.clients.models.entities.Address;
 import com.mspr.clients.models.entities.Client;
 import com.mspr.clients.models.entities.Company;
+import com.mspr.clients.models.enums.RabbitMessageType;
 import com.mspr.clients.models.queries.PaginationQuery;
 import com.mspr.clients.models.requests.ClientCreateRequest;
 import com.mspr.clients.models.requests.ClientUpdateRequest;
@@ -27,6 +28,8 @@ import java.util.Optional;
 public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private ClientRabbitMessageSender clientRabbitMessageSender;
 
     public PagedResult<ClientDTO> findAll(PaginationQuery query) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
@@ -57,8 +60,7 @@ public class ClientService {
                 new Address(clientCreateRequest.street(), clientCreateRequest.postalCode(), clientCreateRequest.city()),
                 new Company(clientCreateRequest.companyName(), clientCreateRequest.email(), clientCreateRequest.phoneNumber())
         );
-
-        return saveClient(client, clientCreateRequest.username());
+        return saveClient(client, clientCreateRequest.username(), RabbitMessageType.CREATED);
     }
 
     @Transactional
@@ -78,18 +80,20 @@ public class ClientService {
             client.getCompany().setEmail(clientUpdateRequest.email());
             client.getCompany().setPhoneNumber(clientUpdateRequest.phoneNumber());
 
-            return saveClient(client, clientUpdateRequest.username());
+            return saveClient(client, clientUpdateRequest.username(), RabbitMessageType.UPDATED);
     }
 
     @Transactional
     public void deleteClient(Long id) {
        Client client = clientRepository.findById(id).orElseThrow(() -> ClientNotFoundException.of(id));
        clientRepository.delete(client);
+       clientRabbitMessageSender.sendMessageInClientQueue(RabbitMessageType.DELETED, client);
     }
-
-    private ClientDTO saveClient(Client client, String username) {
+    private ClientDTO saveClient(Client client, String username, RabbitMessageType messageType) {
         try {
-            return ClientDTO.fromModel(clientRepository.save(client));
+            Client savedClient = clientRepository.save(client);
+            clientRabbitMessageSender.sendMessageInClientQueue(messageType, savedClient);
+            return ClientDTO.fromModel(savedClient);
         } catch (DataIntegrityViolationException ex) {
             if (ex.getMessage().contains("username")) {
                 throw ClientDuplicateUsernameException.of(username);

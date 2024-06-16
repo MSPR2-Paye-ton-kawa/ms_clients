@@ -98,8 +98,7 @@ public class ClientService {
             if (ex.getMessage().contains("username") || ex.getMessage().contains("duplicate")) {
                 throw ClientDuplicateUsernameException.of(username);
             }
-            //throw ex;
-            throw ClientDuplicateUsernameException.of(username);
+            throw ex;
         }
     }
 

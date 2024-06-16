@@ -21,13 +21,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    //    private final KeycloakJwtClaimsConverter keycloakJwtClaimsConverter;
-    //
-    //    public SecurityConfig(KeycloakJwtClaimsConverter keycloakJwtClaimsConverter) {
-    //        this.keycloakJwtClaimsConverter = keycloakJwtClaimsConverter;
-    //
-    //    }
-
     @Bean
     public UnauthorizedEntryPoint unauthorizedEntryPoint(HttpStatusMapper httpStatusMapper, ErrorCodeMapper errorCodeMapper, ErrorMessageMapper errorMessageMapper, ObjectMapper objectMapper) {
         return new UnauthorizedEntryPoint(httpStatusMapper, errorCodeMapper, errorMessageMapper, objectMapper);
@@ -37,11 +30,6 @@ public class SecurityConfig {
     public AccessDeniedHandler accessDeniedHandler(HttpStatusMapper httpStatusMapper, ErrorCodeMapper errorCodeMapper, ErrorMessageMapper errorMessageMapper, ObjectMapper objectMapper) {
         return new ApiErrorResponseAccessDeniedHandler(objectMapper, httpStatusMapper, errorCodeMapper, errorMessageMapper);
     }
-
-//    @Bean
-//    public AuthenticationFailureHandler authenticationFailureHandler(HttpStatusMapper httpStatusMapper, ErrorCodeMapper errorCodeMapper, ErrorMessageMapper errorMessageMapper, ObjectMapper objectMapper) {
-//        return new ApiErrorResponseAccessDeniedHandler(objectMapper, httpStatusMapper, errorCodeMapper, errorMessageMapper);
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AccessDeniedHandler accessDeniedHandler, UnauthorizedEntryPoint unauthorizedEntryPoint) throws Exception {

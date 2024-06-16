@@ -46,7 +46,7 @@ RUN cp -r /ms_clients/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /ms_clients/target/extracted/application/. ./
 
 # CMD ["./mvnw", "spring-boot:run"]
-CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'", "org.springframework.boot.loader.launch.JarLauncher" ]
+CMD [ "java", "-Dspring.profiles.active=dev", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'", "org.springframework.boot.loader.launch.JarLauncher" ]
 
 ## Stage 7: Create a stage for production
 FROM eclipse-temurin:${JAVA_VERSION}-jre-jammy AS final
@@ -65,4 +65,4 @@ COPY --from=extract ms_clients/target/extracted/spring-boot-loader/ ./
 COPY --from=extract ms_clients/target/extracted/snapshot-dependencies/ ./
 COPY --from=extract ms_clients/target/extracted/application/ ./
 EXPOSE 8080
-ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.boot.loader.launch.JarLauncher" ]
+ENTRYPOINT [ "java", "-Dspring.profiles.active=dev", "org.springframework.boot.loader.launch.JarLauncher" ]

@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +34,8 @@ import java.net.URI;
 @SecurityRequirement(name = "Authorization")
 public class ClientController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
+
     @Autowired
     private ClientService clientService;
 
@@ -41,6 +45,7 @@ public class ClientController {
             @RequestParam(name = "page", defaultValue = "1") Integer pageNumber,
             @RequestParam(name = "itemsPerPage", defaultValue = "10") Integer itemsPerPage) {
         PaginationQuery query = new PaginationQuery(pageNumber, itemsPerPage);
+        logger.info("Fetching clients with page number: {} and items per page: {}", pageNumber, itemsPerPage);
         return ResponseEntity.ok(clientService.findAll(query));
     }
 
@@ -53,6 +58,7 @@ public class ClientController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('CLIENTS_READ')")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
+        logger.info("Fetching client with id: {}", id);
         return clientService.getClientById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -74,6 +80,7 @@ public class ClientController {
                 .path("/{id}")
                 .buildAndExpand(createdClientDTO.id())
                 .toUri();
+        logger.info("Client created with id: {}", createdClientDTO.id());
         return ResponseEntity.created(location).body(createdClientDTO);
     }
 
@@ -89,6 +96,7 @@ public class ClientController {
     public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id,
             @RequestBody @Validated ClientUpdateRequest clientUpdateRequest) {
         ClientDTO updatedClient = clientService.updateClient(id, clientUpdateRequest);
+        logger.info("Client updated with id: {}", updatedClient.id());
         return ResponseEntity.ok(updatedClient);
     }
 
@@ -100,6 +108,7 @@ public class ClientController {
     @PreAuthorize("hasRole('CLIENTS_DELETE')")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
+        logger.info("Client deleted with id: {}", id);
         return ResponseEntity.noContent().build();
     }
 }

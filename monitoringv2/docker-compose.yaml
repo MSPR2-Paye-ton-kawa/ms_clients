@@ -1,0 +1,70 @@
+name: 'mspr-monitoring-services'
+services:
+  prometheus:
+    container_name: prometheus-service
+    image: prom/prometheus:latest
+    restart: always
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    command:
+      - --config.file=/etc/prometheus/prometheus.yaml
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    networks:
+      - monitoring
+
+#  promtail:
+#    container_name: promtail
+#    image: grafana/promtail:latest
+#    restart: always
+#    command:
+#      - --config.file=/etc/promtail/promtail-config.yaml
+#    volumes:
+#      - ./promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+#      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    networks:
+#      - monitoring
+
+  loki:
+    container_name: loki
+    image: grafana/loki:latest
+    restart: always
+    ports:
+      - "3100:3100"
+    command: --config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+
+  tempo:
+    container_name: tempo
+    image: grafana/tempo:latest
+    command:
+      - --config.file=/etc/tempo/tempo-config.yaml
+    volumes:
+      - ./tempo/tempo-config.yaml:/etc/tempo/tempo-config.yaml
+    ports:
+      - "3200:3200"     # Tempo
+      - "9411:9411"
+    networks:
+      - monitoring
+
+  grafana:
+    container_name: grafana-service
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  grafana_data: { }

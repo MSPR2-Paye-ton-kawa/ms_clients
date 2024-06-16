@@ -95,10 +95,11 @@ public class ClientService {
             clientRabbitMessageSender.sendMessageInClientQueue(messageType, savedClient);
             return ClientDTO.fromModel(savedClient);
         } catch (DataIntegrityViolationException ex) {
-            if (ex.getMessage().contains("username")) {
+            if (ex.getMessage().contains("username") || ex.getMessage().contains("duplicate")) {
                 throw ClientDuplicateUsernameException.of(username);
             }
-            throw ex;
+            //throw ex;
+            throw ClientDuplicateUsernameException.of(username);
         }
     }
 

@@ -55,6 +55,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" + "id='" + id + '\'' + '\'' + ", username='" + username + '\'' + ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' + ", address=" + address + ", company=" + company + '}';
+        return "Client{" + "id=" + '\'' + id + '\'' + ", username='" + username + '\'' + ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' + ", address=" + address + ", company=" + company + '}';
     }
 }

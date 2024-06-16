@@ -8,8 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.mspr.clients.models.entities.Client;
 
-import java.util.Optional;
-
 public interface ClientRepository extends CrudRepository<Client, Long> {
     Page<ClientDTO> findAll(Pageable pageable);
 

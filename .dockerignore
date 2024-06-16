@@ -23,7 +23,7 @@
 **/docker-compose*
 **/compose*
 **/target
-**/Dockerfile*
+monitoring/docker-compose.yaml
 **/node_modules
 **/npm-debug.log
 **/obj

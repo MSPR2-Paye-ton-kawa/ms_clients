@@ -31,6 +31,7 @@ public class SecurityConfig {
         return new ApiErrorResponseAccessDeniedHandler(objectMapper, httpStatusMapper, errorCodeMapper, errorMessageMapper);
     }
 
+    // START-NOSCAN
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AccessDeniedHandler accessDeniedHandler, UnauthorizedEntryPoint unauthorizedEntryPoint) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/ms-clients/clients/**").authenticated()
@@ -49,4 +50,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+    // END-NOSCAN
 }

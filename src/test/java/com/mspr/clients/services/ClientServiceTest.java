@@ -12,6 +12,7 @@ import com.mspr.clients.models.requests.ClientUpdateRequest;
 import com.mspr.clients.models.responses.PagedResult;
 import com.mspr.clients.repositories.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -166,5 +167,11 @@ class ClientServiceTest {
 
         verify(clientRepository, times(1)).findById(client1.getId());
         verify(clientRepository, times(1)).delete(client1);
+    }
+
+    @Test
+    @Disabled
+    void testTest() {
+        assertThat(true).isFalse();
     }
 }

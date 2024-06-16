@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Embeddable
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

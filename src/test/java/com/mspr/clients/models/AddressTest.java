@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddressTest {
+class AddressTest {
     @Test
     void testAddressAllArgsConstructor() {
         Address address = new Address("street", "postalCode", "city");

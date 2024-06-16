@@ -34,17 +34,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AccessDeniedHandler accessDeniedHandler, UnauthorizedEntryPoint unauthorizedEntryPoint) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/ms-clients/clients/**").authenticated()
-                //                        .requestMatchers(HttpMethod.GET, "/ms-clients/clients/**").hasAnyRole("CLIENTS_READ")
-                //                        .requestMatchers(HttpMethod.POST, "/ms-clients/clients/**").hasAnyRole("CLIENTS_ADD")
-                //                        .requestMatchers(HttpMethod.PUT, "/ms-clients/clients/**").hasAnyRole("CLIENTS_EDIT")
-                //                        .requestMatchers(HttpMethod.DELETE, "/ms-clients/clients/**").hasAnyRole("CLIENTS_DELETE")
                 .anyRequest().permitAll());
 
         http.exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(unauthorizedEntryPoint));
 
         http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakJwtClaimsConverter())));
 
-        http.csrf(AbstractHttpConfigurer::disable);
+        http.csrf(csrf -> csrf
+                .ignoringRequestMatchers("/ms-clients/clients/**")
+        );
         http.cors(AbstractHttpConfigurer::disable);
 
         http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

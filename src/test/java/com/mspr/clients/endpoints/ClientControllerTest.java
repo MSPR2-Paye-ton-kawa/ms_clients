@@ -7,7 +7,6 @@ import com.mspr.clients.dto.ClientDTO;
 import com.mspr.clients.execptions.ClientDuplicateUsernameException;
 import com.mspr.clients.execptions.ClientNotFoundException;
 import com.mspr.clients.models.entities.Address;
-import com.mspr.clients.models.entities.Client;
 import com.mspr.clients.models.entities.Company;
 import com.mspr.clients.models.queries.PaginationQuery;
 import com.mspr.clients.models.requests.ClientCreateRequest;
@@ -16,21 +15,16 @@ import com.mspr.clients.models.responses.PagedResult;
 import com.mspr.clients.services.ClientService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = ClientController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles("test")
-class CientControllerTest {
+class ClientControllerTest {
 
     private static final String ROLE_CLIENTS_READ = "ROLE_CLIENTS_READ";
     private static final String ROLE_CLIENTS_ADD = "ROLE_CLIENTS_ADD";
@@ -394,7 +388,6 @@ class CientControllerTest {
         @Test
         void deleteClient_WithDeleteRole_WhenClientExist_Should_ReturnsNoContent() throws Exception {
             // Given
-            Long clientId = 1L;
 
             // When
             mockMvc.perform(delete("/ms-clients/clients/1")

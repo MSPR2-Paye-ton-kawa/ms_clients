@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CompanyTest {
+class CompanyTest {
     @Test
     void testCompanyAllArgsConstructor() {
         Company company = new Company("name", "email@email.com", "090011223344");

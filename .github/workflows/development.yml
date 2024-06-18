@@ -1,10 +1,10 @@
 name: Development (Sonar)
-run-name: SecurityChecker, CodingStandards, UnitTests, Build and Deploy in dev mode
+run-name: SecurityChecker, UnitTests, CodingStandards, Build and Deploy in dev mode
 on:
   push:
     branches: [ "develop" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "main" ]
 
 jobs:
   security-checker:
@@ -72,12 +72,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=MSPR2-Paye-ton-kawa_ms_clients
-      #      #Analyze project with SonarCloud
-      #      - name: Analyze with SonarCloud
-      #        uses: SonarSource/sonarcloud-github-action@v2.2.0
-      #        env:
-      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       # Check the Quality Gate status.
       - name: SonarQube Quality Gate check
         id: sonarqube-quality-gate-check
@@ -88,7 +82,6 @@ jobs:
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       # Optionally you can use the output from the Quality Gate in another step.
       # The possible outputs of the `quality-gate-status` variable are `PASSED`, `WARN` or `FAILED`.
       - name: "Example show SonarQube Quality Gate Status value"
@@ -126,3 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Unit tests step"
+
+
+
+
